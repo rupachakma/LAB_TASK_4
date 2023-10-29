@@ -37,23 +37,50 @@ def loginpage(request):
 
     return render(request,"login.html")
 
-# def addstudent(request):
-#     if request.method == "POST":
-#         username = request.POST.get("name")
-#         firstname = request.POST.get("f_name")
-#         lastname = request.POST.get("l_name")
-#         email = request.POST.get("email")
-#         mobile = request.POST.get("m_number")
-#         profilepic = request.FILES.get("profilepic")
+def addstudent(request):
+    if request.method == "POST":
+        username = request.POST.get("name")
+        firstname = request.POST.get("f_name")
+        lastname = request.POST.get("l_name")
+        email = request.POST.get("email")
+        mobile = request.POST.get("m_number")
+        profilepic = request.FILES.get("profilepic")
 
-#         student = Students(
-#             username = username,
-#             first_name = firstname,
-#             last_name = lastname,
-#             email = email,
-#             mobile_number = mobile,
-#             profilepic = profilepic,
-#         )
-#         student.save()
-#         return redirect("homepage")
-#     return render(request,"addstudent.html")
+        student = Students(
+            username = username,
+            first_name = firstname,
+            last_name = lastname,
+            email = email,
+            mobile_number = mobile,
+            profilepic = profilepic,
+        )
+        student.save()
+        return redirect("homepage")
+    return render(request,"addstudent.html")
+
+def updatestudent(request,id):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        firstname = request.POST.get("f_name")
+        lastname = request.POST.get("l_name")
+        email = request.POST.get("email")
+        mobile = request.POST.get("m_number")
+        profilepic = request.FILES.get("profilepic")
+
+        student = Students(
+            id = id,
+            username = name,
+            first_name = firstname,
+            last_name = lastname,
+            email = email,
+            mobile_number = mobile,
+            profilepic = profilepic,
+        )
+        student.save()
+        return redirect("homepage")
+    return render(request,"updatestudent.html")
+
+def deletestudent(request,id):
+    student = Students.objects.get(id=id)
+    student.delete()
+    return redirect("homepage")
